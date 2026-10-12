@@ -198,6 +198,19 @@ select_custom_id() {
   return 0
 }
 
+discover_by_replug_auto() {
+  local tmp_dir
+  tmp_dir="$(mktemp -d -t "${PROJECT_NAME}.replug.XXXXXX")"
+  local result
+  if discover_by_replug "$tmp_dir/before" "$tmp_dir/disconnected" "$tmp_dir/after" "$tmp_dir/added"; then
+    result=0
+  else
+    result=$?
+  fi
+  rm -rf "$tmp_dir"
+  return "$result"
+}
+
 select_from_connected() {
   local ids_file="$1" known_file="$2" unknown_file="$3"
   local id name confidence note selected
@@ -232,9 +245,13 @@ select_from_connected() {
   if [[ -s "$unknown_file" ]]; then
     echo "检测到 USB 设备，但没有设备清单匹配项："
     nl -w2 -s') ' "$unknown_file"
-    if prompt_read "输入要尝试的编号，或输入 c 自定义 VID:PID： "; then
+    if prompt_read "输入要尝试的编号，c 自定义 VID:PID，r 断开/重连识别： "; then
       if [[ "$REPLY" == c ]]; then
         select_custom_id
+        return $?
+      fi
+      if [[ "$REPLY" == r ]]; then
+        discover_by_replug_auto
         return $?
       fi
       [[ "$REPLY" =~ ^[0-9]+$ ]] || return 1
