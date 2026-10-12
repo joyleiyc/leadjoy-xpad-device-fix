@@ -97,7 +97,7 @@ curl -fsSL https://raw.githubusercontent.com/joyleiyc/leadjoy-xpad-device-fix/ma
 
 ## 产品信息
 
-动感指尖官方网站将 **天剑Plus** 列为天剑系列产品，并分别提供 2.4G 连接 PC、蓝牙和有线连接教程。官网没有公开 Linux USB ID 兼容清单，因此这里把 `4131:3519` 明确标记为社区观测值，而不是官方固定值。
+动感指尖官方网站将 **天剑Plus** 列为天剑系列产品；产品页使用 `xeno-plus` 作为网址和素材命名，但页面展示名称是天剑Plus。官方教程页分别提供 2.4G 连接 PC、蓝牙连接 PC/Switch/Android/iOS 以及有线连接 PC 的教程。公开页面没有给出 Linux 型号编号或 USB ID 兼容清单，因此这里把 `4131:3519` 明确标记为社区观测值，而不是官方固定值。
 
 官方页面：
 

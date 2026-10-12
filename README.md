@@ -97,7 +97,7 @@ The helper loads `xpad` and writes the selected ID to `/sys/bus/usb/drivers/xpad
 
 ## Product information
 
-LeadJoy's official site lists **天剑Plus** as a product in the 天剑 series and provides separate tutorials for 2.4G PC, Bluetooth, and wired connections. The site does not publish a Linux USB-ID compatibility table, so `4131:3519` is intentionally documented here as a community observation rather than an official constant.
+LeadJoy's official site lists **天剑Plus** as a product in the 天剑 series. Its product page uses the `xeno-plus` URL/asset naming, while the visible product name is 天剑Plus; the official tutorial page provides separate guidance for 2.4G PC, Bluetooth (PC/Switch/Android/iOS), and wired PC connections. The public pages do not state a Linux model number or USB-ID compatibility table, so `4131:3519` is intentionally documented here as a community observation rather than an official constant.
 
 Official pages:
 
