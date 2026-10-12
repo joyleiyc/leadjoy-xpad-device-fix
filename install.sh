@@ -189,6 +189,15 @@ choose_id_from_file() {
   printf '%s\n' "$selected"
 }
 
+select_custom_id() {
+  prompt_read "输入自定义 VID:PID（例如 1234:abcd）： " || return 1
+  SELECTED_ID="$(normalize_id "$REPLY")" || { echo "USB ID 格式错误。" >&2; return 1; }
+  DEVICE_NAME="用户自定义设备"
+  DEVICE_CONFIDENCE="user-selected"
+  DEVICE_NOTE="Not present in the built-in list"
+  return 0
+}
+
 select_from_connected() {
   local ids_file="$1" known_file="$2" unknown_file="$3"
   local id name confidence note selected
@@ -225,12 +234,8 @@ select_from_connected() {
     nl -w2 -s') ' "$unknown_file"
     if prompt_read "输入要尝试的编号，或输入 c 自定义 VID:PID： "; then
       if [[ "$REPLY" == c ]]; then
-        prompt_read "输入 VID:PID（例如 1234:abcd）： " || return 1
-        SELECTED_ID="$(normalize_id "$REPLY")" || { echo "USB ID 格式错误。" >&2; return 1; }
-        DEVICE_NAME="用户自定义设备"
-        DEVICE_CONFIDENCE="user-selected"
-        DEVICE_NOTE="Not present in the built-in list"
-        return 0
+        select_custom_id
+        return $?
       fi
       [[ "$REPLY" =~ ^[0-9]+$ ]] || return 1
       SELECTED_ID="$(sed -n "${REPLY}p" "$unknown_file")"
@@ -311,11 +316,14 @@ select_device() {
   fi
   printf '%s\n' "" "当前没有自动识别到可用的已知设备。"
   print_known_list
-  prompt_read "若手柄已连接，可输入 c 重新扫描并选择未知设备；若未连接，输入 r 进行断开/重连识别；输入 l 选择清单项；输入 q 取消： " || return 1
+  prompt_read "输入 s 扫描已连接设备，c 自定义 VID:PID，r 进行断开/重连识别，l 选择清单项，q 取消： " || return 1
   case "$REPLY" in
-    c)
+    s)
       scan_usb_ids > "$ids"
       select_from_connected "$ids" "$known" "$unknown"
+      ;;
+    c)
+      select_custom_id
       ;;
     r)
       discover_by_replug "$before" "$disconnected" "$after" "$added"
@@ -346,10 +354,12 @@ if [[ "$COMMAND" == install ]]; then
   log "selected ${DEVICE_NAME} (${VID}:${PID}); evidence=${DEVICE_CONFIDENCE}"
 fi
 
-if ((EUID == 0)); then
+if [[ "$DRY_RUN" == true ]]; then
+  SUDO=()
+elif ((EUID == 0)); then
   SUDO=()
 else
-  command -v sudo >/dev/null 2>&1 || die "sudo is required when this script is not run as root"
+  command -v sudo >/dev/null 2>&1 || die "sudo is required when this command changes system files"
   SUDO=(sudo)
 fi
 as_root() { "${SUDO[@]}" "$@"; }
