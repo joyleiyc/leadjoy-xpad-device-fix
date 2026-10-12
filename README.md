@@ -6,22 +6,22 @@
 
 ## 一键安装
 
-将 `<OWNER>/<REPO>` 换成实际 GitHub 仓库后：
+将 `joyleiyc/tianjian-plus-xpad-fix` 换成实际 GitHub 仓库后：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh | bash
 ```
 
 脚本会在需要时调用 `sudo`，安装并启用：
 
-- `/usr/local/libexec/tianjian-plus-xpad`：加载 `xpad` 并注册 `4131:3519`；
+- `/usr/local/libexec/tianjian-plus-xpad-fix`：加载 `xpad` 并注册 `4131:3519`；
 - `tianjian-plus-xpad.service`：开机处理已经插入的接收器；
 - `99-tianjian-plus-xpad.rules`：插入或重新插拔时自动处理。
 
 如果你的硬件批次使用不同的 USB ID，可覆盖默认值：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh \
+curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh \
   | bash -s -- install --vid 4131 --pid 3519
 ```
 
@@ -31,13 +31,13 @@ curl -fsSL https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh \
 
 ```bash
 # 查看服务和 /dev/input/js*
-curl -fsSL https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh | bash -s -- status
+curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh | bash -s -- status
 
 # 手动立即注册一次（不改安装内容）
-curl -fsSL https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh | bash -s -- run
+curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh | bash -s -- run
 
 # 卸载服务、udev 规则和辅助程序
-curl -fsSL https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh | bash -s -- uninstall
+curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh | bash -s -- uninstall
 ```
 
 卸载不会强制卸载 `xpad` 内核模块，因为系统中可能还有其他手柄正在使用它。
@@ -77,7 +77,7 @@ echo '4131 3519' > /sys/bus/usb/drivers/xpad/new_id
 `curl | bash` 会直接执行远程脚本。正式发布后建议使用固定版本或先下载审阅：
 
 ```bash
-curl -fsSLo install.sh https://raw.githubusercontent.com/<OWNER>/<REPO>/main/install.sh
+curl -fsSLo install.sh https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh
 less install.sh
 bash install.sh
 ```
