@@ -6,7 +6,7 @@
 
 ## 一键安装
 
-将 `joyleiyc/tianjian-plus-xpad-fix` 换成实际 GitHub 仓库后：
+直接运行：
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/main/install.sh | bash
@@ -15,8 +15,8 @@ curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/mai
 脚本会在需要时调用 `sudo`，安装并启用：
 
 - `/usr/local/libexec/tianjian-plus-xpad-fix`：加载 `xpad` 并注册 `4131:3519`；
-- `tianjian-plus-xpad.service`：开机处理已经插入的接收器；
-- `99-tianjian-plus-xpad.rules`：插入或重新插拔时自动处理。
+- `tianjian-plus-xpad-fix.service`：开机处理已经插入的接收器；
+- `99-tianjian-plus-xpad-fix.rules`：插入或重新插拔时自动处理。
 
 如果你的硬件批次使用不同的 USB ID，可覆盖默认值：
 
@@ -45,7 +45,7 @@ curl -fsSL https://raw.githubusercontent.com/joyleiyc/tianjian-plus-xpad-fix/mai
 ## 本地验证
 
 ```bash
-systemctl status tianjian-plus-xpad.service
+systemctl status tianjian-plus-xpad-fix.service
 lsusb -d 4131:3519
 ls -l /dev/input/js*
 cat /proc/bus/input/devices | grep -A12 -i -E 'liteemf|tianjian|xbox|xpad'
