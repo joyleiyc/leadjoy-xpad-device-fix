@@ -1,0 +1,7 @@
+# USB_ID	Device	Evidence	Notes
+4131:3519	LeadJoy 天剑 Plus 2.4G receiver	community-observed	User supplied LiteEMF observation; verify on target machine
+37d7:2401	Flydigi Vader 5 Pro 2.4G receiver	documented-project	Dedicated xpad project reports this ID
+3537:100f	GameSir Nova 2 Lite receiver	community-recipe	Community xpad new_id recipe; verify firmware/mode
+3537:1098	GameSir Nova 2 Lite receiver	community-recipe	Community xpad new_id recipe; verify firmware/mode
+2dc8:310a	8BitDo Ultimate 2C 2.4G receiver	community-recipe	Community udev/xpad recipe; verify firmware/mode
+2dc8:3106	8BitDo Ultimate 2.4G receiver	community-recipe	Community udev/xpad recipe; verify firmware/mode
